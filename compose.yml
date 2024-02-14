@@ -1,0 +1,18 @@
+services:
+  cuda:
+    container_name: cuda
+    image: nvidia/cuda:12.3.1-runtime-ubuntu22.04
+    restart: always
+  tirtha_repo:
+    container_name: tirtha_repo
+    build: .
+    restart: always
+    volumes:
+      - type: bind
+        source: ./tirtha
+        target: /var/www/tirtha 
+    ports:
+      - "8000:8000"
+      - "15672:15672"
+    depends_on:
+      - cuda
