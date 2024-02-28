@@ -1,18 +1,35 @@
 services:
-  cuda:
-    container_name: cuda
-    image: nvidia/cuda:12.3.1-runtime-ubuntu22.04
-    restart: always
-  tirtha_repo:
-    container_name: tirtha_repo
+  web:
     build: .
     restart: always
+    command: /bin/bash 
+    tty: true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              # NOTE: Untested with multiple GPUs
+              # count: 1 # GPU count | Default: all GPUs
+              capabilities: [gpu]
     volumes:
-      - type: bind
+      - type: bind # user can change the source file path according to their preferences. NOTE: source file path is of the host pc. And target is from the docker container. 
         source: ./tirtha
-        target: /var/www/tirtha 
+        target: /var/www/tirtha
+    env_file:
+      - ./docker.env
     ports:
       - "8000:8000"
       - "15672:15672"
     depends_on:
-      - cuda
+      - db
+
+  db:
+    build: ./postgres
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=docker # changing password here will not reflect in the environment of database container, as it is getting changed in environment file of the database. It is just given to avoid runtime error.
+    env_file:
+      - ./docker.env
+    ports:
+      - "8001:5432" # user can change the host machine port. NOTE: the docker port should not be changed. 5432 is a default port for container based on postgres image.

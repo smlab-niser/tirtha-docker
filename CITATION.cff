@@ -1,0 +1,33 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: >-
+  Tirtha - An Automated Platform to Crowdsource Images and
+  Create 3D Models of Heritage Sites
+message: 'If you use this software, please cite it as below.'
+type: software
+authors:
+  - family-names: Vishwakarma
+    given-names: Anubhav
+    orcid: 'https://orcid.org/0009-0004-9982-4268'
+  - family-names: Shivottam
+    given-names: Jyotirmaya
+    orcid: 'https://orcid.org/0000-0002-2688-9421'
+  - family-names: Mishra
+    given-names: Subhankar
+    orcid: 'https://orcid.org/0000-0002-9910-7291'
+identifiers:
+  - type: doi
+    value: 10.1145/3611314.3615904
+    description: Conference Paper
+repository-code: 'https://github.com/smlab-niser/tirtha-public'
+url: 'https://smlab.niser.ac.in/project/tirtha/'
+keywords:
+  - open source
+  - digital heritage
+  - crowdsourcing
+  - 3D dataset
+  - photogrammetry
+license: AGPL-3.0
+version: 0.1.0
