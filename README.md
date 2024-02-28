@@ -21,7 +21,8 @@
 
     3.2 Use following command ```sudo docker compose up```, to build and run the image tirtha-web and tirtha-deb. 
 
-    3.3 After image build is complete, user can attach the shell with either of the containers. For the web-site tirtha-web container is required. And it can be attached with the this command. ```sudo docker exec -it tirtha-web-1 bash```
+    3.3 After image build is complete, user can attach the shell with either of the containers. For the web-site tirtha-web container is required. And it can be attached with the this command. ```sudo docker exec -it container_name```.
+    To find the container name use the following command ```sudo docker ps```. 
 
 
 4. Users can check Tirtha-related logs at /var/www/tirtha/logs/ and logs for system packages, like RabbitMQ, using journalctl. Postgres logs are available using ```sudo docker logs --details container_name```.
