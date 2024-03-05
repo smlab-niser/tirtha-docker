@@ -2,7 +2,7 @@ services:
   web:
     build: .
     restart: always
-    command: /bin/bash 
+    command: /bin/bash
     tty: true
     deploy:
       resources:
@@ -10,12 +10,12 @@ services:
           devices:
             - driver: nvidia
               # NOTE: Untested with multiple GPUs
-              # count: 1 # GPU count | Default: all GPUs
+              # count: 1 # GPU count | Default setting is to use all GPUs
               capabilities: [gpu]
     volumes:
-      - type: bind # user can change the source file path according to their preferences. NOTE: source file path is of the host pc. And target is from the docker container. 
-        source: ./tirtha
-        target: /var/www/tirtha
+      - type: bind
+        source: ./tirtha  # On Host machine
+        target: /var/www/tirtha  # Inside docker container
     env_file:
       - ./docker.env
     ports:
@@ -28,8 +28,8 @@ services:
     build: ./postgres
     restart: always
     environment:
-      - POSTGRES_PASSWORD=docker # changing password here will not reflect in the environment of database container, as it is getting changed in environment file of the database. It is just given to avoid runtime error.
+      - POSTGRES_PASSWORD=docker  # NOTE: This is only here to avoid runtime error. Use docker.env to provide the password.
     env_file:
       - ./docker.env
     ports:
-      - "8001:5432" # user can change the host machine port. NOTE: the docker port should not be changed. 5432 is a default port for container based on postgres image.
+      - "8001:5432"  # Host:Container

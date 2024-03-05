@@ -1,31 +1,37 @@
-## Docker support for [Project Tirtha](https://github.com/smlab-niser/tirtha-public)
+# Docker Config for [Project Tirtha](https://github.com/smlab-niser/tirtha-public)
 
+>[!warning]
+> The image sizes are large and downloading packages takes the most time during the build process. On a stable 100 Mbps connection, the build process takes around 30-40 minutes.
+> | Image   |  Size   |
+> | ------------ | ------- |
+> | `tirtha-web`  | 21.1 GB  |
+> | `tirtha-db`    | 0.431 GB |
 
-1. Requirements:
-    * Docker [engine](https://docs.docker.com/engine/install/) and [compose](https://docs.docker.com/compose/install/). 
-    * Nvidia drivers installed. 
-    * [Nvidia container toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html).
+---
 
+## Requirements
+* Docker [engine](https://docs.docker.com/engine/install/) and [compose](https://docs.docker.com/compose/install/). 
+* Nvidia drivers installed.
+* [Nvidia container toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html).
 
-2. Size of the image is: 
-
-   | REPOSITORY   |  SIZE   |
-   | ------------ | ------- |
-   | tirtha-web   | 21.1GB  |
-   | tirtha-db    | 431MB   |
-
-
-3. Steps to build the image: 
-
-    3.1 User can change the environment variables such as the IP of the host machine, and database configuration. Important is change of Host Ip if user is trying to use the dockerfile through the ssh session. NOTE: By default, if user is using this in host pc itself  nothing is required to change and password can be seen in the environment file.
-
-    3.2 Use following command ```sudo docker compose up```, to build and run the image tirtha-web and tirtha-deb. 
-
-    3.3 After image build is complete, user can attach the shell with either of the containers. For the web-site tirtha-web container is required. And it can be attached with the this command. ```sudo docker exec -it container_name```.
-    To find the container name use the following command ```sudo docker ps```. 
-
-
-4. Users can check Tirtha-related logs at /var/www/tirtha/logs/ and logs for system packages, like RabbitMQ, using journalctl. Postgres logs are available using ```sudo docker logs --details container_name```.
-
-
-5. Docker container will use ports 8000(gunicorn), 15672(rabbitmq) and 5432(postgres) on the host system. Ensure these ports are free on the host system. 
+## Build steps
+* Clone the repository and `cd` into the directory:
+    ```sh
+    git clone https://github.com/smlab-niser/tirtha-docker.git && cd tirtha-docker
+    ```
+* Edit the [`docker.env`](https://github.com/smlab-niser/tirtha-docker/blob/main/docker.env) file to set the environment variables as per your requirements. In case, you are setting up Tirtha on a remote server, you need to set the `HOST_IP` to the IP address of the server. Also, set the `DEBUG` variable to `False`, if you are configuring Tirtha for production.
+* The containers will use ports 8000 (for gunicorn), 15672 (for RabbitMQ), and 8001 (for Postgres) on the host system. Ensure these ports are free on the host.
+* Run the following command to build the images:
+    ```sh
+    sudo docker-compose up
+    ```
+* After the build is complete, the containers can be attached using the following command:
+    ```sh
+    sudo docker exec -it container_name
+    ```
+    To find the `container_name`, use the following command:
+    ```sh
+    sudo docker ps
+    ```
+* The Tirtha web interface can be accessed at `http://localhost:8000` or `http://<HOST_IP>:8000` if you are setting up Tirtha on a remote server. To access the Django admin interface, use `http://localhost:8000/admin` or `http://<HOST_IP>:8000/admin`. The default username and password can be found in the `docker.env` file.
+* To access Tirtha-related logs, check the `/var/www/tirtha/logs/` directory. Logs for system packages, like RabbitMQ, can be accessed using `journalctl`. Postgres logs are available using `sudo docker logs --details container_name`.

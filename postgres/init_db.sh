@@ -1,4 +1,7 @@
 #!/bin/bash
+# This is the entrypoint for the postgres container.
+# It is responsible for creating the database and user, and setting the permissions.
+
 set -e
 
 psql -v ON_ERROR_STOP=1 --username "postgres" <<-EOSQL
