@@ -1,5 +1,6 @@
 # Docker Config for [Project Tirtha](https://github.com/smlab-niser/tirtha-public)
 
+* Go to the [main repo](https://github.com/smlab-niser/tirtha-public) for instructions related to manual setup.
 >[!warning]
 > The image sizes are large and downloading packages takes the most time during the build process. On a stable 100 Mbps connection, the build process takes around 30-40 minutes.
 > | Image   |  Size   |
@@ -20,7 +21,7 @@
     git clone https://github.com/smlab-niser/tirtha-docker.git && cd tirtha-docker
     ```
 * Edit the [`docker.env`](https://github.com/smlab-niser/tirtha-docker/blob/main/docker.env) file to set the environment variables as per your requirements. In case, you are setting up Tirtha on a remote server, you need to set the `HOST_IP` to the IP address of the server. Also, set the `DEBUG` variable to `False`, if you are configuring Tirtha for production.
-* The containers will use ports 8000 (for gunicorn), 15672 (for RabbitMQ), and 8001 (for Postgres) on the host system. Ensure these ports are free on the host.
+* The containers will use ports 8000 (for gunicorn), 8001 (for Postgres), and 15672 (for RabbitMQ), on the host system. Ensure these ports are free on the host.
 * Run the following command to build the images:
     ```sh
     sudo docker-compose up
