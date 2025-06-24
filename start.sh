@@ -45,7 +45,7 @@ source /venv/bin/activate
 
 # Starting celery in a tmux session
 tmux new-session -d -s celery_session || tmux attach-session -t celery_session
-tmux send-keys -t celery_session "celery -A tirtha worker -l INFO --max-tasks-per-child=1 -P threads --beat" C-m
+tmux send-keys -t celery_session "celery -A tirtha worker -l INFO --max-tasks-per-child=1 -P threads --beat --concurrency=1" C-m
 
 # Starting RabbitMQ for celery
 service rabbitmq-server start
